@@ -1,0 +1,19 @@
+#!/bin/bash
+sudo yum update -y
+sudo yum install -y git
+
+sudo amazon-linux-extras install nginx1
+
+
+
+sudo yum install git
+
+sudo systemctl start nginx.service
+sudo systemctl enable nginx.service
+
+
+sudo ln -s /home/ec2-user/bank-web/build/ /usr/share/nginx/html
+
+
+nginx.conf 파일 이동
+sudo systemctl restart nginx.service
