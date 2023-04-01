@@ -1,18 +1,5 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { Fragment, useState } from 'react'
+
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3CenterLeftIcon,
@@ -36,6 +23,8 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
+import axios from 'axios'
+// import axios from 'axios'
 
 const navigation = [
   { name: 'Home', href: '#!', icon: HomeIcon, current: true },
@@ -79,6 +68,32 @@ function classNames(...classes) {
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [customerName,setCustomerName] = useState("이름없음")
+  const [customerBank,setCustomerBank] = useState("은행연결안됨")
+  const [connectCount,setConnectCount] = useState("Undefined")
+  const [usdkwr,setUsdkrw] = useState("Undefined")
+
+
+  useEffect(() => {
+
+    axios.get("/api/getInfo").then((data)=>{
+
+      setCustomerName(data.data.userName)
+      setCustomerBank(data.data.userBank)
+      setConnectCount(data.data.user)
+
+    })
+
+    axios.get("/api/getUSDKRW").then((data)=>{
+
+      setUsdkrw(data.data.exchange)
+
+
+    })
+
+
+  },[])
+
 
   return (
     <>
@@ -139,7 +154,7 @@ function App() {
                   <div className="flex flex-shrink-0 items-center px-4">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300"
+                      src="https://kr.seaicons.com/wp-content/uploads/2016/03/Amazon-icon-10.png"
                       alt="Easywire logo"
                     />
                   </div>
@@ -196,7 +211,7 @@ function App() {
             <div className="flex flex-shrink-0 items-center px-4">
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300"
+                src="https://kr.seaicons.com/wp-content/uploads/2016/03/Amazon-icon-10.png"
                 alt="Easywire logo"
               />
             </div>
@@ -281,11 +296,11 @@ function App() {
                     <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="https://item.kakaocdn.net/do/352ac5962711310bc280054d252626888f324a0b9c48f77dbce3a43bd11ce785"
                         alt=""
                       />
                       <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
-                        <span className="sr-only">Open user menu for </span> ㅇㅇㅇ 님
+                        <span className="sr-only">Open user menu for </span> {customerName} 님
                       </span>
                       <ChevronDownIcon
                         className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
@@ -349,18 +364,18 @@ function App() {
                     <div className="flex items-center">
                       <img
                         className="hidden h-16 w-16 rounded-full sm:block"
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
+                        src="https://item.kakaocdn.net/do/352ac5962711310bc280054d252626888f324a0b9c48f77dbce3a43bd11ce785"
                         alt=""
                       />
                       <div>
                         <div className="flex items-center">
                           <img
                             className="h-16 w-16 rounded-full sm:hidden"
-                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
+                            src="https://item.kakaocdn.net/do/352ac5962711310bc280054d252626888f324a0b9c48f77dbce3a43bd11ce785"
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                            안녕하세요. ㅇㅇㅇ 님
+                            안녕하세요. {customerName} 님
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -370,7 +385,7 @@ function App() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                               aria-hidden="true"
                             />
-                            회사 : ㅇㅇ 은행
+                            회사 : {customerBank}
                           </dd>
                           <dt className="sr-only">Account status</dt>
                           <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
@@ -378,7 +393,7 @@ function App() {
                               className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
                               aria-hidden="true"
                             />
-                            유효한 계정입니다.
+                            유효한 계정입니다. (현재까지 {connectCount} 접속하셨습니다.)
                           </dd>
                         </dl>
                       </div>
@@ -418,7 +433,13 @@ function App() {
                             <dl>
                               <dt className="truncate text-sm font-medium text-gray-500">{card.name}</dt>
                               <dd>
-                                <div className="text-lg font-medium text-gray-900">{card.amount}</div>
+                                <div className="text-lg font-medium text-gray-900">{card.amount}
+ 
+                                </div>
+                                <div className="text-sm  text-gray-900">
+                                ( 금일 환율 : { usdkwr }원/$ )
+                                </div>
+
                               </dd>
                             </dl>
                           </div>
