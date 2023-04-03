@@ -1,13 +1,4 @@
 #!/bin/bash
-sudo yum update -y
-sudo amazon-linux-extras install nginx1
-sudo yum install -y git
-
-git clone https://github.com/simjh0919/DRWeb-AWS.git /home/ec2-user/web
-
-sudo rm -rf /usr/share/nginx/html
-sudo ln -s /home/ec2-user/web/build/ /usr/share/nginx/html
-
 echo " " >> nginx.conf
 echo "     sendfile            on;" >> nginx.conf
 echo "     tcp_nopush          on;" >> nginx.conf
@@ -30,7 +21,7 @@ echo "             root         /usr/share/nginx/html;" >> nginx.conf
 echo "         }" >> nginx.conf
 echo " " >> nginx.conf
 echo "         location /api {" >> nginx.conf
-echo "             proxy_pass http://172.31.48.187:5000;" >> nginx.conf
+echo "             proxy_pass http://{$1}:5000;" >> nginx.conf
 echo "         }" >> nginx.conf
 echo "         " >> nginx.conf
 echo "         error_page 404 /404.html;" >> nginx.conf
@@ -43,10 +34,3 @@ echo "         }" >> nginx.conf
 echo "     }" >> nginx.conf
 echo " }" >> nginx.conf
 echo " " >> nginx.conf
-
-sudo rm -rf /etc/nginx/nginx.conf
-sudo mv /home/ec2-user/web/ngnix.conf /etc/nginx/nginx.conf
-
-sudo systemctl start nginx.service
-sudo systemctl enable nginx.service
-sudo systemctl restart nginx.service
