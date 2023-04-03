@@ -39,7 +39,7 @@ echo " }" >> /home/ec2-user/web/nginx.conf
 echo " " >> /home/ec2-user/web/nginx.conf
 
 sudo rm -rf /etc/nginx/nginx.conf
-sudo mv /home/ec2-user/web/ngnix.conf /etc/nginx/nginx.conf
+sudo mv /home/ec2-user/web/nginx.conf /etc/nginx/nginx.conf
 
 sudo systemctl start nginx.service
 sudo systemctl enable nginx.service
