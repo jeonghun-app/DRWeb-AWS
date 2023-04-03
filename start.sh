@@ -2,7 +2,7 @@
 sudo rm -rf /usr/share/nginx/html
 sudo ln -s /home/ec2-user/web/build/ /usr/share/nginx/html
 
-echo " " >> /home/ec2-user/web//home/ec2-user/web/nginx.conf
+echo " " >> /home/ec2-user/web/nginx.conf
 echo "     sendfile            on;" >> /home/ec2-user/web/nginx.conf
 echo "     tcp_nopush          on;" >> /home/ec2-user/web/nginx.conf
 echo "     tcp_nodelay         on;" >> /home/ec2-user/web/nginx.conf
