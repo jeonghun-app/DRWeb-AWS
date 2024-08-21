@@ -19,10 +19,6 @@ echo "         listen       80;" >> /home/ec2-user/web/nginx.conf
 echo "         listen       [::]:80;" >> /home/ec2-user/web/nginx.conf
 echo "         server_name  _;" >> /home/ec2-user/web/nginx.conf
 echo " " >> /home/ec2-user/web/nginx.conf
-echo "         location / {" >> /home/ec2-user/web/nginx.conf
-echo "             root         /usr/share/nginx/html;" >> /home/ec2-user/web/nginx.conf
-echo "         }" >> /home/ec2-user/web/nginx.conf
-echo " " >> /home/ec2-user/web/nginx.conf
 echo "         location /api {" >> /home/ec2-user/web/nginx.conf
 echo "             proxy_pass http://$1:5000;" >> /home/ec2-user/web/nginx.conf
 echo "         }" >> /home/ec2-user/web/nginx.conf
